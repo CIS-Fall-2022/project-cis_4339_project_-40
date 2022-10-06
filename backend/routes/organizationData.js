@@ -2,13 +2,11 @@ const express = require("express");
 const router = express.Router(); 
 
 //importing data model schemas
-let { primarydata } = require("../models/primary"); 
-let { eventdata } = require("../models/events");
- 
+let { organizationdata } = require("../models/organization"); 
 
 //GET all entries
 router.get("/", (req, res, next) => { 
-    primarydata.find( 
+    organizationdata.find( 
         (error, data) => {
             if (error) {
                 return next(error);
@@ -21,7 +19,7 @@ router.get("/", (req, res, next) => {
 
 //GET single entry by ID
 router.get("/id/:id", (req, res, next) => {
-    primarydata.find( 
+    organizationdata.find( 
         { _id: req.params.id }, 
         (error, data) => {
             if (error) {
@@ -37,8 +35,8 @@ router.get("/id/:id", (req, res, next) => {
 //Ex: '...?firstName=Bob&lastName=&searchBy=name' 
 router.get("/search/", (req, res, next) => { 
     let dbQuery = "";
-    if (req.query["searchBy"] === 'name') {
-        dbQuery = { firstName: { $regex: `^${req.query["firstName"]}`, $options: "i" }, lastName: { $regex: `^${req.query["lastName"]}`, $options: "i" } }
+    if (req.query["searchBy"] === 'orgname') {
+        dbQuery = { orgName: { $regex: `^${req.query["Organization Name"]}`, $options: "i" }, lastName: { $regex: `^${req.query["lastName"]}`, $options: "i" } }
     } else if (req.query["searchBy"] === 'number') {
         dbQuery = {
             "phoneNumbers.primaryPhone": { $regex: `^${req.query["phoneNumbers.primaryPhone"]}`, $options: "i" }
