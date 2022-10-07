@@ -5,6 +5,7 @@ const cors = require("cors");
 //allow using a .env file
 require("dotenv").config();   
 
+
 //creates a new instance of express application
 const app = express();
 
@@ -33,10 +34,12 @@ app.use(morgan("dev"));
 //import routes
 const primaryDataRoute  = require('./routes/primaryData');
 const eventsDataRoute  = require('./routes/eventsData');
+const organizationDataRoute  = require('./routes/organizationData');
 
 //setup middle ware for routes
 app.use('/primaryData', primaryDataRoute);
-app.use('/eventData', eventsDataRoute)
+app.use('/eventData', eventsDataRoute);
+app.use('/organizationData', organizationDataRoute);
 
 app.listen(PORT, () => {
   console.log("Server started listening on port : ", PORT);
