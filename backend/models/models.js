@@ -7,7 +7,7 @@ let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
     firstName: {
         type: String,
-        require: true
+        required: true
     },
     middleName: {
         type: String,
@@ -40,6 +40,9 @@ let primaryDataSchema = new Schema({
         zip: {
             type: String,
         }
+    },
+    orgCode: {
+        type: [String] // to link the organization code
     }
 }, {
     collection: 'primaryData',
@@ -48,10 +51,13 @@ let primaryDataSchema = new Schema({
 
 //collection for eventData
 let eventDataSchema = new Schema({
-    _id: { type: String, default: uuid.v1 },
+    _id: { 
+        type: String, 
+        default: uuid.v1 
+    },
     eventName: {
         type: String,
-        require: true
+        required: true
     },
     services: {
         type: Array
@@ -79,17 +85,71 @@ let eventDataSchema = new Schema({
     },
     description: {
         type: String,
+        required: true,
     },
     attendees: [{
         type: String
-    }]
+    }],
+    orgCode: {
+        type: [String] // to link the organization code
+    }
 }, {
     collection: 'eventData'
 });
 
+
+
+//collection for organizationData
+let organizationDataSchema = new Schema({
+    _id: { type: String, default: uuid.v1 },
+    orgName: {
+        type: String,
+        required: true
+    },
+    orgType: {
+        type: [String],
+        required: true
+    },
+    orgPhone: {
+        type: Array,
+        required: true
+    },
+    address: {
+        line1: {
+            type: String
+        },
+        line2: {
+            type: String,
+        },
+        city: {
+            type: String,
+            required: true
+        },
+        county: {
+            type: String,
+        },
+        zip: {
+            type: String,
+        }
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    orgCode: {
+        type: String,
+        required: true,
+        unique: true
+    }
+}, {
+    collection: 'organizationData',
+    timestamps: true
+});
+
 // create models from mongoose schemas
+const organizationdata = mongoose.model('organizationData', organizationDataSchema);
 const primarydata = mongoose.model('primaryData', primaryDataSchema);
 const eventdata = mongoose.model('eventData', eventDataSchema);
 
 // package the models in an object to export 
-module.exports = { primarydata, eventdata }
+module.exports = { primarydata, eventdata, organizationdata }
