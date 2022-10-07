@@ -124,4 +124,22 @@ router.put("/addAttendee/:id", (req, res, next) => {
     
 });
 
+// ADD DELETE API 
+ router.delete("/:id",(req,res,next) =>{
+    eventdata.findOneAndRemove({ _id: req.params.id }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.status(200).json({
+                msg: data
+            });
+        }
+    });
+});
+
+// add the count of 
+//https://stackoverflow.com/questions/7937233/how-do-i-calculate-the-date-in-javascript-three-months-prior-to-today -- source
+var d = new Date();
+d.setMonth(d.getMonth() - 3);
+
 module.exports = router;
