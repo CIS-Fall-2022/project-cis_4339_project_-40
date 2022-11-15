@@ -104,6 +104,16 @@ export default {
         });
       });
     },
+    handleClientDelete() {
+      let apiURL = import.meta.env.VITE_ROOT_API + '/primarydata/${this.id}';
+      axios.delete(apiURL, this.client).then(() => {
+        alert("Client has been deleted.");
+        this.$router.back().catch((error) =>{
+          console.log(error);
+        });
+
+      })
+    },
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
