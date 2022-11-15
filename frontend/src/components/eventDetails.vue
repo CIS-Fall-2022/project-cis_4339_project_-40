@@ -320,6 +320,16 @@ export default {
         });
       });
     },
+    handleEventDelete() {
+      this.event.services = this.checkedServices;
+      let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
+      axios.delete(apiURL, this.event).then(() => {
+        alert("Event has been removed.");
+        this.$router.back().catch((error) => {
+          console.log(error);
+        });
+      });
+    },
     editClient(clientID) {
       this.$router.push({ name: "updateclient", params: { id: clientID } });
     },
