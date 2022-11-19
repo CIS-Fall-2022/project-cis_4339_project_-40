@@ -69,4 +69,13 @@ export default {
   color: white;
   padding: 18px;
 }
+
+.table1 { 
+  font-family: 'Times New Roman', Times, serif;
+  color: black;
+  width: 100%;
+  background-color: lightcoral;
+  text-align: left;
+  border: 2px solid rgb(10, 10, 10)
+}
 </style>
