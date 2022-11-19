@@ -196,7 +196,7 @@
               class="bg-red-700 text-white rounded"
             >Update Event</button>
           </div>
-          <div class="flex justify-between mt-10 mr-20">
+          <div class="flex justify-between mt-10 mr-20"> <!-- Created delete button with calls to eventdelete on button click-->
             <button
               @click="handleEventDelete"
               type="submit"
@@ -327,13 +327,12 @@ export default {
         });
       });
     },
-    handleEventDelete() {
-      this.event.services = this.checkedServices;
+    handleEventDelete() { //delete function that deletes event based on the ID and pushes to backend via axios
       let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
       axios.delete(apiURL, this.event).then(() => {
-        alert("Event has been removed.");
+        alert("Event has been removed."); //success message
         this.$router.back().catch((error) => {
-          console.log(error);
+          console.log(error); //if there is an error it will be printed to the frontend
         });
       });
     },
