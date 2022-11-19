@@ -104,12 +104,12 @@ export default {
         });
       });
     },
-    handleClientDelete() {
+    handleClientDelete() { //Delete function for removing clitent via axios call
       let apiURL = import.meta.env.VITE_ROOT_API + '/primarydata/${this.id}';
       axios.delete(apiURL, this.client).then(() => {
-        alert("Client has been deleted.");
+        alert("Client has been deleted."); //success message showing client has been deleted
         this.$router.back().catch((error) =>{
-          console.log(error);
+          console.log(error); //prints error if there is an error while deleting
         });
 
       })
@@ -342,12 +342,12 @@ export default {
               class="bg-red-700 text-white rounded"
             >Update Client</button>
           </div>
-          <div class="flex justify-between mt-10 mr-20">
+          <div class="flex justify-between mt-10 mr-20"> <!-- Delete button that is calling the function on button click-->
             <button
-              @click="handleClientDelete"
+              @click="handleClientDelete" 
               type="submit"
               class="bg-red-700 text-white rounded"
-            >Delete Client</button>
+            >Delete Client</button> 
           </div>
           <div class="flex justify-between mt-10 mr-20">
             <button
