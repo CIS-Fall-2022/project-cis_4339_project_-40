@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router(); 
 
 //importing data model schemas
-let { organizationdata } = require("../models/organization"); 
+let { organizationdata } = require("../models/models"); 
 
 //GET all entries
 router.get("/", (req, res, next) => { 
@@ -10,10 +10,14 @@ router.get("/", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
+            } else if (data.length == null ) {
+                res.status(400);
+                res.send("Organizations not found");                 
             } else {
-                res.json(data);
-            }
+                res.status(200);
+                res.send("Organizations found");
         }
+    }    
     ).sort({ 'updatedAt': -1 }).limit(10);
 });
 
@@ -24,9 +28,13 @@ router.get("/id/:id", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
+            } else if (data.length == null ) {
+                res.status(400);
+                res.send("Organization not found by ID");                 
             } else {
-                res.json(data);
-            }
+                res.status(200);
+                res.send("Organizations found by ID");
+        }
         }
     );
 });
@@ -36,11 +44,9 @@ router.get("/id/:id", (req, res, next) => {
 router.get("/search/", (req, res, next) => { 
     let dbQuery = "";
     if (req.query["searchBy"] === 'orgname') {
-        dbQuery = { orgName: { $regex: `^${req.query["Organization Name"]}`, $options: "i" }, lastName: { $regex: `^${req.query["lastName"]}`, $options: "i" } }
-    } else if (req.query["searchBy"] === 'number') {
-        dbQuery = {
-            "phoneNumbers.primaryPhone": { $regex: `^${req.query["phoneNumbers.primaryPhone"]}`, $options: "i" }
-        }
+        dbQuery = { orgName: { $regex: `^${req.query["orgName"]}`, $options: "i" }}
+    } else if (req.query["searchBy"] === 'ID') {
+        dbQuery = { orgCode: { $regex: `^${req.query["orgCode"]}`, $options: "i" }}
     };
     primarydata.find( 
         dbQuery, 
@@ -54,41 +60,64 @@ router.get("/search/", (req, res, next) => {
     );
 });
 
-//GET events for a single client
-router.get("/events/:id", (req, res, next) => { 
-    
-});
 
 //POST
 router.post("/", (req, res, next) => { 
-    primarydata.create( 
+    organizationdata.create( 
         req.body,
         (error, data) => { 
             if (error) {
                 return next(error);
+            } else if (data.length == null ) {
+                res.status(400);
+                res.send("Organization not added");                 
             } else {
-                res.json(data); 
+                res.status(200);
+                res.send("Organization added");
             }
         }
     );
-    primarydata.createdAt;
-    primarydata.updatedAt;
-    primarydata.createdAt instanceof Date;
+    console.log(organizationdata.createdAt);
+    console.log(organizationdata.updatedAt);
+    console.log(organizationdata.createdAt instanceof Date);
 });
 
 //PUT update (make sure req body doesn't have the id)
 router.put("/:id", (req, res, next) => { 
-    primarydata.findOneAndUpdate( 
+    organizationdata.findOneAndUpdate( 
         { _id: req.params.id }, 
         req.body,
         (error, data) => {
             if (error) {
                 return next(error);
+            } else if (data.length == null ) {
+                res.status(400);
+                res.send("Organization not updated");                 
             } else {
-                res.json(data);
+                res.status(200);
+                res.send("Organization updated");
             }
         }
     );
 });
+
+
+// ADD DELETE API 
+router.delete("/:id",(req,res,next) =>{
+    organizationdata.findOneAndRemove({ _id: req.params.id }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else if (data.length == null ) {
+            res.status(400);
+            res.send("Organization not deleted");                 
+        } else {
+            res.status(200).send("Organization deleted");
+            res.json({
+                msg: data
+            });
+        }
+    });
+});
+
 
 module.exports = router;

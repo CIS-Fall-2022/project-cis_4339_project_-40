@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 //importing data model schemas
-let { eventdata } = require("../models/events"); 
+let { eventdata } = require("../models/models"); 
 
 //GET all entries
 router.get("/", (req, res, next) => { 
@@ -72,8 +72,10 @@ router.post("/", (req, res, next) => {
         (error, data) => { 
             if (error) {
                 return next(error);
+            } else if (data.length == null ) {
+                res.status(400).send("Event not added");                 
             } else {
-                res.json(data);
+                res.status(200).send("Event added");
             }
         }
     );
@@ -87,8 +89,10 @@ router.put("/:id", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
+            } else if (data.length == null ) {
+                res.status(400).send("Event not updated");                 
             } else {
-                res.json(data);
+                res.status(200).send("Event updated");
             }
         }
     );
@@ -123,5 +127,50 @@ router.put("/addAttendee/:id", (req, res, next) => {
     );
     
 });
+
+// ADD DELETE API 
+ router.delete("/deleteBy/:id",(req,res,next) =>{
+    eventdata.findByIdAndRemove
+    ({ _id: req.params.id },
+         (error, data) => {
+        if (error) {
+            return next(error);
+        } else if (data.length == null ) {
+            res.status(400);
+            res.send("Client not added");                 
+        } else {
+            res.status(200).send("Client added");
+            res.json({
+                msg: data
+            });
+        }
+    });
+});
+
+// API TO GET ATTENDEES OF EVENTS OVER LAST 2 MONTHS
+
+router.get("/eventAttendees", (req, res, next) => { 
+    var past2Date = new Date(); // 
+    eventdata.aggregate([
+            {$match: {
+                date: {
+                        $gt : new Date(past2Date.setMonth(past2Date.getMonth() - 2)),
+                        $lt : new Date() 
+                }
+            }},
+            {$event: 
+                {total: { $sum: { $size:"$attendees"}}}}
+        ], 
+            (error, data) => {
+                if (error) {
+                    return next(error);
+                } else {
+                    res.json(data);
+                }
+            }
+        )
+});
+
+
 
 module.exports = router;
