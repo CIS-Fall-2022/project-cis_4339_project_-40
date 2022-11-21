@@ -1,4 +1,6 @@
-# Data Platform Project Setup
+# Management Project Setup
+
+# The main branch contains all the latest code and runs perfectly.
 
 Requirements:
 
