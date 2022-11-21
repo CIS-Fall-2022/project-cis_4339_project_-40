@@ -103,13 +103,14 @@ router.put("/:id", (req, res, next) => {
 });
 
 
-// ADD DELETE API 
-router.delete("/:id",(req,res,next) =>{
-    organizationdata.findOneAndRemove({ _id: req.params.id }, (error, data) => {
+// ADD DELETE API  // we used the mongoosejs document we used to get a better way to find and delete https://mongoosejs.com/docs/api/model.html
+router.delete("/:id",(req,res,next) =>{ 
+    organizationdata.findByIdAndRemove 
+    ({ _id: req.params.id },
+         (error, data) => {
         if (error) {
             return next(error);
         } else {
-          
             res.json({
                 msg: data
             });

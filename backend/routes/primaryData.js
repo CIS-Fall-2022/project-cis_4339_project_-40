@@ -93,7 +93,7 @@ router.put("/:id", (req, res, next) => {
 });
 
 
-// ADD DELETE API 
+// ADD DELETE API  // we used the mongoosejs document we used to get a better way to find and delete https://mongoosejs.com/docs/api/model.html
 router.delete("/deleteBy/:id",(req,res,next) =>{
     primarydata.findByIdAndRemove
     ({ _id: req.params.id },req.body,

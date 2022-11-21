@@ -127,7 +127,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
     
 });
 
-// ADD DELETE API 
+// ADD DELETE API  // we used the mongoosejs document we used to get a better way to find and delete https://mongoosejs.com/docs/api/model.html 
  router.delete("/deleteBy/:id",(req,res,next) =>{
     eventdata.findByIdAndRemove
     ({ _id: req.params.id },
@@ -143,13 +143,13 @@ router.put("/addAttendee/:id", (req, res, next) => {
 });
 
 // API TO GET ATTENDEES OF EVENTS OVER LAST 2 MONTHS
-
-router.get("/eventAttendees", (req, res, next) => { 
+// We have used https://mongoosejs.com/docs/api.html#mongoose_Mongoose-Aggregate to use proper route and to use aggregate function
+router.get("/eventAttendees", (req, res, next) => {  // https://www.geeksforgeeks.org/mongodb-greater-than-equals-to-operator-gte/  and  // https://www.geeksforgeeks.org/mongodb-less-than-operator-lt/?ref=rp
     var past2Date = new Date(); // 
     eventdata.aggregate([
             {$match: {
                 date: {
-                        $gt : new Date(past2Date.setMonth(past2Date.getMonth() - 3)), 
+                        $gt : new Date(past2Date.setMonth(past2Date.getMonth() - 2)), // we have 3 months of previous just as an example but I am changing it back to 2
                         $lt : new Date() 
                 }
             }}
