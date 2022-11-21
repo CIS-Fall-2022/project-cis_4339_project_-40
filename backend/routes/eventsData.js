@@ -68,7 +68,7 @@ router.get("/client/:id", (req, res, next) => {
 //POST
 router.post("/", (req, res, next) => { 
     eventdata.create( 
-        req.body, 
+        req.body,
         (error, data) => { 
             if (error) {
                 return next(error);
@@ -77,6 +77,9 @@ router.post("/", (req, res, next) => {
             }
         }
     );
+    console.log(eventdata.createdAt);
+    console.log(eventdata.updatedAt);
+    console.log(eventdata.createdAt instanceof Date);
 });
 
 //PUT
@@ -88,7 +91,7 @@ router.put("/:id", (req, res, next) => {
             if (error) {
                 return next(error);
             }  else {
-                res.status(200);
+                res.json(data);
             }
         }
     );
@@ -132,7 +135,6 @@ router.put("/addAttendee/:id", (req, res, next) => {
         if (error) {
             return next(error);
         } else {
-            res.status(200);
             res.json({
                 msg: data
             });
@@ -147,12 +149,11 @@ router.get("/eventAttendees", (req, res, next) => {
     eventdata.aggregate([
             {$match: {
                 date: {
-                        $gt : new Date(past2Date.setMonth(past2Date.getMonth() - 2)),
+                        $gt : new Date(past2Date.setMonth(past2Date.getMonth() - 3)), 
                         $lt : new Date() 
                 }
-            }},
-            {$event: 
-                {total: { $sum: { $size:"$attendees"}}}}
+            }}
+            
         ], 
             (error, data) => {
                 if (error) {
