@@ -88,7 +88,7 @@ let eventDataSchema = new Schema({
     },
     description: {
         type: String,
-        required: true,
+        
     },
     attendees: [{
         type: String
