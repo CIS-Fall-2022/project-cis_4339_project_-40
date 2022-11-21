@@ -1,6 +1,6 @@
 # Management Project Setup
 
-# The main branch contains all the latest code and runs perfectly.
+# The main branch contains all the latest code with backend implementing the delete operation, the counter and getting the ORGNAME for the dashboard and the frontend #with implementing the chart js for the barchart, then adding tables, the dashboard. It will runs smooth and we implemented the error handeling but did ended up going back to normal.
 
 Requirements:
 
