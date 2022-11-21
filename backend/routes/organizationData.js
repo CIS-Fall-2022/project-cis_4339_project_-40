@@ -10,9 +10,6 @@ router.get("/", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
-            } else if (data.length == null ) {
-                res.status(400);
-                res.send("Organizations not found");                 
             } else {
                 res.status(200);
                 res.send("Organizations found");
@@ -28,12 +25,8 @@ router.get("/id/:id", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
-            } else if (data.length == null ) {
-                res.status(400);
-                res.send("Organization not found by ID");                 
-            } else {
-                res.status(200);
-                res.send("Organizations found by ID");
+            }  else {
+                res.json(data);
         }
         }
     );
@@ -68,12 +61,8 @@ router.post("/", (req, res, next) => {
         (error, data) => { 
             if (error) {
                 return next(error);
-            } else if (data.length == null ) {
-                res.status(400);
-                res.send("Organization not added");                 
             } else {
-                res.status(200);
-                res.send("Organization added");
+                res.json(data);
             }
         }
     );
@@ -90,11 +79,8 @@ router.put("/:id", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
-            } else if (data.length == null ) {
-                res.status(400);
-                res.send("Organization not updated");                 
-            } else {
-                res.status(200);
+            }  else {
+                res.json(data);
                 res.send("Organization updated");
             }
         }
@@ -107,11 +93,8 @@ router.delete("/:id",(req,res,next) =>{
     organizationdata.findOneAndRemove({ _id: req.params.id }, (error, data) => {
         if (error) {
             return next(error);
-        } else if (data.length == null ) {
-            res.status(400);
-            res.send("Organization not deleted");                 
         } else {
-            res.status(200).send("Organization deleted");
+          
             res.json({
                 msg: data
             });

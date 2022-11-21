@@ -72,10 +72,8 @@ router.post("/", (req, res, next) => {
         (error, data) => { 
             if (error) {
                 return next(error);
-            } else if (data.length == null ) {
-                res.status(400).send("Event not added");                 
             } else {
-                res.status(200).send("Event added");
+                res.json(data);
             }
         }
     );
@@ -89,10 +87,8 @@ router.put("/:id", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
-            } else if (data.length == null ) {
-                res.status(400).send("Event not updated");                 
-            } else {
-                res.status(200).send("Event updated");
+            }  else {
+                res.status(200);
             }
         }
     );
@@ -135,11 +131,8 @@ router.put("/addAttendee/:id", (req, res, next) => {
          (error, data) => {
         if (error) {
             return next(error);
-        } else if (data.length == null ) {
-            res.status(400);
-            res.send("Client not added");                 
         } else {
-            res.status(200).send("Client added");
+            res.status(200);
             res.json({
                 msg: data
             });

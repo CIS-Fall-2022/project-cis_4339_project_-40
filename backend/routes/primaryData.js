@@ -64,12 +64,8 @@ router.post("/", (req, res, next) => {
         (error, data) => { 
             if (error) {
                 return next(error);
-            } else if (data.length == null ) {
-                res.status(400);
-                res.send("Client not added");                 
             } else {
-                res.status(200);
-                res.send("Client added");
+                res.json(data);
             }
         }
     );
@@ -89,12 +85,8 @@ router.put("/:id", (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
-            }else if (data.length == null ) {
-                res.status(400);
-                res.send("Client not updated");                 
-            } else {
-                res.status(200);
-                res.send("Client updated");
+            }else {
+                res.json(data);
             }
         }
     );
@@ -108,12 +100,8 @@ router.delete("/deleteBy/:id",(req,res,next) =>{
          (error, data) => {
         if (error) {
             return next(error);
-        } else if (data.length == null ) {
-            res.status(400);
-            res.send("Client not deleted");                 
-        } else {
-            res.status(200); 
-            res.send("Client deleted");
+        }  else {
+            res.json(data);
         }
     });
 });
