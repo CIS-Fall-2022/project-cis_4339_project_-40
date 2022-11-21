@@ -328,7 +328,7 @@ export default {
       });
     },
     handleEventDelete() { //delete function that deletes event based on the ID and pushes to backend via axios
-      let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
+      let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/deleteBy/${this.id}`;
       axios.delete(apiURL, this.event).then(() => {
         alert("Event has been removed."); //success message
         this.$router.back().catch((error) => {

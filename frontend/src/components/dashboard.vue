@@ -2,7 +2,7 @@
   <div>
     <AttendingBar v-if="!othererror && !error"  :label="mychartlabels" :chart-data="mychartData"></AttendingBar>
   </div>
-<!-- this is the table for the data from the database that coincides with the bar graph-->
+  <!-- this is the table for the data from the database that coincides with the bar graph-->
   <div>
     <table class="table1">
       <thead>
@@ -25,7 +25,7 @@
 </template>
 <script>
 //import the necessary modules and components from various modules
-  import AttendingBar from './barChart.vue';
+  import AttendingBar from '../assets/barChart.vue';
   import axios from "axios";
   export default {
     components:{
@@ -47,7 +47,7 @@
         try {
           this.error = null;
           this.othererror = true;
-          const url = 'http://localhost:3000/eventData/recentevents';
+          const url = 'http://localhost:3000/eventData/eventAttendees';
           const response = await axios.get(url);
           //Taking all the data from API call and placing them into different variables for the graph/table
           this.mychartlabels = response.data.map((item) => item.eventName);

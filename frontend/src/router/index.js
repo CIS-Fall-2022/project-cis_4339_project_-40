@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+
 const routes = [
     {
         path: '/',
@@ -39,7 +40,8 @@ const routes = [
         name: 'eventdetails',
         props: true,
         component: () => import('../components/eventDetails.vue')
-    }
+    }, 
+    
 ]
 const router = createRouter({
     history: createWebHistory(), routes
