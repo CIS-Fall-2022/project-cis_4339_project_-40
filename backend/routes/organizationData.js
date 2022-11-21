@@ -1,4 +1,5 @@
 const express = require("express"); 
+const { org_id } = require("../app");
 const router = express.Router(); 
 
 //importing data model schemas
@@ -39,7 +40,7 @@ router.get("/search/", (req, res, next) => {
     if (req.query["searchBy"] === 'orgname') {
         dbQuery = { orgName: { $regex: `^${req.query["orgName"]}`, $options: "i" }}
     } else if (req.query["searchBy"] === 'ID') {
-        dbQuery = { orgCode: { $regex: `^${req.query["orgCode"]}`, $options: "i" }}
+        dbQuery = { _id: { $regex: `^${req.query["_id"]}`, $options: "i" }}
     };
     primarydata.find( 
         dbQuery, 
@@ -49,6 +50,20 @@ router.get("/search/", (req, res, next) => {
             } else {
                 res.json(data);
             }
+        }
+    );
+});
+
+//GET single entry by ID for the organization name
+router.get("/orgName", (req, res, next) => {
+    organizationdata.find( 
+        { _id:org_id }, 
+        (error, data) => {
+            if (error) {
+                return next(error);
+            }  else {
+                res.json(data);
+        }
         }
     );
 });
