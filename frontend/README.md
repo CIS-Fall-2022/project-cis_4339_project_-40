@@ -12,6 +12,7 @@ Setup a .env file with following variables, e.g.:
 
 ```
 VITE_ROOT_API=http://localhost:3000
+org_id = 9aca9930-45fb-11ed-8f85-8793772a4922
 ```
 ### Compiles and hot-reloads for development
 ```
